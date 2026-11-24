@@ -200,8 +200,8 @@ content.innerHTML='<h2>'+s.title+'</h2><p class="sub">'+s.sub+'</p>';
 function addOptionsQuestion(q,i){
 const el=document.createElement('div');
 el.className='question';
-const opts=q.slice(1,4);
-const correct=q[4];
+const opts=q.slice(1,-1);
+const correct=q.at(-1);
 
 el.innerHTML='<div class="qtitle">'+(i+1)+'. '+q[0]+'</div><div class="options"></div><div class="feedback" id="f'+i+'"></div>';
 const op=el.querySelector('.options');
