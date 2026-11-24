@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>own it 1 unit 2 present simple, frequency of time</title>
+<style>
+:root{--ink:#24324a;--muted:#65738a;--bg:#f4f7fc;--card:#fff;--blue:#5276e8;--purple:#8b65d8;--green:#2c9b70;--red:#d85b68;--line:#e4eaf4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(120deg,#5276e8,#8b65d8);color:white;padding:28px 20px 24px}
+.wrap{max-width:960px;margin:auto;padding:0 18px}
+h1{margin:0;font-size:clamp(25px,4vw,36px)}
+header p{margin:6px 0 0;opacity:.92}
+.game-header{display:flex;align-items:flex-start;gap:clamp(12px,3vw,26px);padding:0}
+.guru-logo{display:block;flex:none;width:clamp(64px,13vw,112px);height:auto;background:#fff;padding:6px;border-radius:12px}
+main{padding:22px 0 50px}
+.topline{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:16px}
+.pill{background:#e9efff;color:#405fc5;border-radius:30px;padding:6px 12px;font-size:13px;font-weight:700}
+.progress{height:8px;background:#e4e9f3;border-radius:20px;overflow:hidden;flex:1;min-width:120px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .25s}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}
+.nav button{border:1px solid var(--line);background:white;color:var(--muted);padding:9px 13px;border-radius:12px;cursor:pointer;font-weight:600}
+.nav button.active{background:var(--ink);color:white;border-color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,28px);box-shadow:0 8px 28px #263c6410}
+h2{margin:0 0 5px;font-size:24px}
+.sub{color:var(--muted);margin:0 0 20px}
+.question{padding:14px 0;border-bottom:1px solid var(--line)}
+.question:last-child{border:0}
+.qtitle{font-weight:650;margin-bottom:10px}
+.options{display:flex!important;gap:8px;flex-wrap:wrap;visibility:visible!important;opacity:1!important}
+.opt{display:inline-flex!important;align-items:center;border:1px solid #cfd8e8;background:#f7f9ff;padding:10px 14px;border-radius:11px;cursor:pointer;font:inherit;color:var(--ink);min-height:42px}
+.opt:hover{border-color:var(--blue);background:#edf2ff}
+.opt.selected{background:#eaf0ff;border-color:var(--blue);color:#3658c6}
+.opt.correct{background:#e7f7ef;border-color:var(--green);color:#18734f}
+.opt.wrong{background:#fff0f1;border-color:var(--red);color:#b43b49}
+input.answer{width:min(100%,440px);padding:10px 12px;border:1px solid #cfd8e8;border-radius:10px;font:inherit;color:var(--ink)}
+.feedback{font-size:14px;margin-top:7px;min-height:20px}
+.good{color:var(--green);font-weight:650}
+.bad{color:var(--red);font-weight:650}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;border-radius:12px;padding:11px 17px;font:inherit;font-weight:700;cursor:pointer;background:var(--blue);color:white}
+.btn.secondary{background:#edf1f8;color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.score{font-weight:700;color:var(--blue)}
+.oralbox{background:#f1f4ff;border-radius:16px;padding:18px;margin:14px 0}
+.oralprompt{font-size:21px;font-weight:700;margin:8px 0}
+.hint{color:var(--muted);font-size:14px}
+.tag{display:inline-block;background:#f0eaff;color:#7450b9;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
+.reading{background:#fbfcff;border:1px solid var(--line);padding:17px;border-radius:14px;margin:12px 0}
+.reading p{margin:0 0 9px}
+.reading p:last-child{margin:0}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:22px}
+@media(max-width:600px){
+.nav button{flex:1 1 42%}
+.topline{align-items:flex-start}
+.card{border-radius:15px}
+.opt{flex:1 1 auto;justify-content:center}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap game-header">
+<img class="guru-logo" src="./guru-logo.png" alt="GURU">
+<div>
+<h1>own it 1 unit 2 present simple, frequency of time</h1>
+<p>My daily life</p>
+</div>
+</div>
+</header>
+
+<main class="wrap">
+<div class="topline">
+<span class="pill" id="stepLabel">1 / 6 · Warm-up</span>
+<div class="progress"><div class="bar" id="progress"></div></div>
+<span class="score" id="score">Score: 0</span>
+</div>
+<nav class="nav" id="nav"></nav>
+<section class="card" id="content"></section>
+</main>
+
+<footer>Read the prompts aloud, explain your answers and make your own sentences!</footer>
+
+<script>
+const sections = [
+{
+name:"Warm-up",
+type:"oral",
+title:"Wake up your English!",
+sub:"Talk about your daily life. Use full sentences.",
+prompts:[
+"Tell me what time you get up.",
+"Tell me about your breakfast routine.",
+"Describe what you do after school.",
+"Tell me about your weekend routine.",
+"Say three things you do every day."
+],
+tip:"Useful language: I usually… · I sometimes… · I don't… · I never…"
+},
+{
+name:"Grammar",
+type:"choice",
+title:"Grammar detective",
+sub:"Choose the correct answer. All options are visible.",
+qs:[
+["My sister ___ tennis.","play","plays","playes",1],
+["I ___ like milk.","doesn't","don't","not",1],
+["He ___ watch TV.","don't","doesn't","isn't",1],
+["We ___ to school every day.","go","goes","gos",0],
+["Tom ___ get up early.","don't","doesn't","isn't",1],
+["My parents ___ TV.","watches","watch","watchs",1],
+["She ___ English.","study","studys","studies",2],
+["They ___ play football.","doesn't","don't","not",1]
+]
+},
+{
+name:"Fix it",
+type:"fix",
+title:"Find and correct the mistake",
+sub:"Rewrite each sentence correctly. Remember: don't / doesn't + base verb.",
+qs:[
+["She don't like pizza.","She doesn't like pizza."],
+["I goes to school every day.","I go to school every day."],
+["He watch TV in the evening.","He watches TV in the evening."],
+["They doesn't play tennis.","They don't play tennis."],
+["My mum cook dinner every day.","My mum cooks dinner every day."],
+["Tom don't get up early.","Tom doesn't get up early."]
+]
+},
+{
+name:"Frequency",
+type:"choice",
+title:"Frequency adverbs",
+sub:"Choose the sentence with the correct word order. All options are visible.",
+qs:[
+["Choose the correct sentence:","I always have breakfast.","I have always breakfast.",0],
+["Choose the correct sentence:","She never is late.","She is never late.",1],
+["Choose the correct sentence:","We sometimes play football.","We play sometimes football.",0],
+["Choose the correct sentence:","He usually gets up at seven.","He gets usually up at seven.",0],
+["Choose the correct sentence:","They often watch TV.","They watch often TV.",0]
+]
+},
+{
+name:"Reading",
+type:"reading",
+title:"Meet Emma!",
+sub:"Read the text. Then complete the tasks below.",
+text:"Hi! My name is Emma. I'm 10 years old. I live with my family. I usually get up at 7 o'clock. I always have breakfast with my mum. I go to school at 8 o'clock. I like English, but I don't like Maths. After school, I often play with my friends. I sometimes watch TV, but I never watch TV in the morning. I don't play computer games every day. In the evening, I do my homework and read books. I usually go to bed at 9 o'clock.",
+tasks:[
+"Find two affirmative sentences with I.",
+"Find two negative sentences with I.",
+"Find four frequency adverbs in the text.",
+"Say three things Emma does and two things she doesn't do."
+]
+},
+{
+name:"Speaking",
+type:"speaking",
+title:"Your turn: talk about your life",
+sub:"Press Next to get a speaking challenge. Answer aloud in full sentences.",
+prompts:[
+"Tell me two things you ALWAYS do.",
+"Tell me two things you SOMETIMES do.",
+"Tell me two things you NEVER do.",
+"Tell me two things you DON'T do every day.",
+"Compare your daily routine with Emma's routine.",
+"Describe your usual evening."
+],
+tip:"Try to use: always · usually · often · sometimes · never · don't · doesn't"
+}
+];
+
+let current=0,score=0,oralIndex=0;
+const content=document.getElementById('content');
+const nav=document.getElementById('nav');
+
+function renderNav(){
+nav.innerHTML='';
+sections.forEach((s,i)=>{
+let b=document.createElement('button');
+b.textContent=(i+1)+'. '+s.name;
+b.className=i===current?'active':'';
+b.onclick=()=>{current=i;render()};
+nav.appendChild(b);
+});
+}
+
+function header(){
+document.getElementById('stepLabel').textContent=(current+1)+' / '+sections.length+' · '+sections[current].name;
+document.getElementById('progress').style.width=((current+1)/sections.length*100)+'%';
+document.getElementById('score').textContent='Score: '+score;
+}
+
+function shell(s){
+content.innerHTML='<h2>'+s.title+'</h2><p class="sub">'+s.sub+'</p>';
+}
+
+function addOptionsQuestion(q,i){
+const el=document.createElement('div');
+el.className='question';
+const opts=q.slice(1,4);
+const correct=q[4];
+
+el.innerHTML='<div class="qtitle">'+(i+1)+'. '+q[0]+'</div><div class="options"></div><div class="feedback" id="f'+i+'"></div>';
+const op=el.querySelector('.options');
+
+opts.forEach((o,j)=>{
+const b=document.createElement('button');
+b.type='button';
+b.className='opt';
+b.textContent=o;
+b.addEventListener('click',()=>{
+if(el.dataset.done)return;
+el.dataset.done='1';
+if(j===correct){
+b.classList.add('correct');
+document.getElementById('f'+i).innerHTML='<span class="good">Correct!</span>';
+score++;
+}else{
+b.classList.add('wrong');
+op.children[correct].classList.add('correct');
+document.getElementById('f'+i).innerHTML='<span class="bad">Not quite.</span> Correct answer: '+opts[correct];
+}
+header();
+});
+op.appendChild(b);
+});
+content.appendChild(el);
+}
+
+function render(){
+const s=sections[current];
+renderNav();
+header();
+shell(s);
+
+if(s.type==='oral'){
+const box=document.createElement('div');
+s.prompts.forEach((p,i)=>{
+const d=document.createElement('div');
+d.className='question';
+d.innerHTML='<span class="tag">Prompt '+(i+1)+'</span><div class="qtitle">'+p+'</div>';
+box.appendChild(d);
+});
+content.appendChild(box);
+content.insertAdjacentHTML('beforeend','<p class="hint">'+s.tip+'</p>');
+
+}else if(s.type==='choice'){
+s.qs.forEach((q,i)=>addOptionsQuestion(q,i));
+
+}else if(s.type==='fix'){
+s.qs.forEach((q,i)=>{
+const el=document.createElement('div');
+el.className='question';
+el.innerHTML='<div class="qtitle">'+(i+1)+'. '+q[0]+'</div><input class="answer" id="a'+i+'" placeholder="Write the correct sentence"><div class="feedback" id="f'+i+'"></div>';
+content.appendChild(el);
+});
+
+const b=document.createElement('button');
+b.className='btn';
+b.textContent='Check answers';
+b.onclick=()=>{
+s.qs.forEach((q,i)=>{
+const inp=document.getElementById('a'+i);
+const f=document.getElementById('f'+i);
+if(inp.dataset.done)return;
+const norm=x=>x.toLowerCase().replace(/[.!?]/g,'').replace(/\s+/g,' ').trim();
+if(norm(inp.value)===norm(q[1])){
+f.innerHTML='<span class="good">Correct!</span>';
+score++;
+}else{
+f.innerHTML='<span class="bad">Correct answer:</span> '+q[1];
+}
+inp.dataset.done='1';
+});
+header();
+};
+content.appendChild(b);
+
+}else if(s.type==='reading'){
+const r=document.createElement('div');
+r.className='reading';
+r.textContent=s.text;
+content.appendChild(r);
+
+s.tasks.forEach((t,i)=>{
+const d=document.createElement('div');
+d.className='question';
+d.innerHTML='<span class="tag">Task '+(i+1)+'</span><div class="qtitle">'+t+'</div>';
+content.appendChild(d);
+});
+
+}else if(s.type==='speaking'){
+content.insertAdjacentHTML('beforeend',
+'<div class="oralbox"><span class="tag">Speaking challenge <span id="oralNum">1</span>/'+s.prompts.length+'</span><div class="oralprompt" id="oralPrompt"></div><p class="hint">'+s.tip+'</p></div><div class="actions"><button class="btn" id="nextPrompt">Next challenge</button><button class="btn secondary" id="restartPrompt">Start again</button></div>'
+);
+
+oralIndex=0;
+showPrompt();
+
+document.getElementById('nextPrompt').onclick=()=>{
+oralIndex=(oralIndex+1)%s.prompts.length;
+showPrompt();
+};
+document.getElementById('restartPrompt').onclick=()=>{
+oralIndex=0;
+showPrompt();
+};
+}
+
+const actions=document.createElement('div');
+actions.className='actions';
+actions.innerHTML='<button class="btn secondary" id="prev">← Previous</button><button class="btn" id="next">Next section →</button>';
+content.appendChild(actions);
+
+document.getElementById('prev').disabled=current===0;
+document.getElementById('prev').onclick=()=>{
+if(current>0){current--;render()}
+};
+
+document.getElementById('next').textContent=current===sections.length-1?'Finish lesson':'Next section →';
+document.getElementById('next').onclick=()=>{
+if(current<sections.length-1){current++;render()}
+else finish();
+};
+}
+
+function showPrompt(){
+const s=sections[current];
+document.getElementById('oralPrompt').textContent=s.prompts[oralIndex];
+document.getElementById('oralNum').textContent=oralIndex+1;
+}
+
+function finish(){
+content.innerHTML='<h2>Great work!</h2><p class="sub">You have finished the revision lesson.</p><div class="oralbox"><div class="oralprompt">Your practice score: '+score+'</div><p>Now practise saying your own sentences with <b>always, usually, often, sometimes, never, don\'t</b> and <b>doesn\'t</b>.</p></div><button class="btn" onclick="current=0;score=0;render()">Start again</button>';
+document.getElementById('stepLabel').textContent='Lesson complete';
+document.getElementById('progress').style.width='100%';
+document.getElementById('score').textContent='Score: '+score;
+nav.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+}
+
+render();
+</script>
+</body>
+</html>
